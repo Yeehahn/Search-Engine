@@ -1,0 +1,26 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Checkout private test repository
+      uses: actions/checkout@v4
+      with:
+        repository: NCHS-CS/idp-hw5-search-engine
+        path: solution
+        token: ${{ secrets.PRIVATE_REPO_ACCESS_TOKEN }}
+        ref: solution 
+    - name: Test Results
+      run: |
+        chmod +x ./solution/tests-zz/run_test.sh
+        bash ./solution/tests-zz/run_test.sh solution
