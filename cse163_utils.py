@@ -29,6 +29,8 @@ def normalize_paths(paths):
     """
     # allow this method to work with a list of paths
     # and just a single path
+    if len(paths) == 0:
+        return []
     if paths is list:
         return [re.sub(r'\\+', '/', file) for file in paths]
     return re.sub(r'\\+', '/', paths)
