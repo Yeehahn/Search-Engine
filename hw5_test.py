@@ -25,3 +25,9 @@ def test_search():
     expected = normalize_paths(expected)
     actual = normalize_paths(actual)
     assert_equals(expected, actual)
+    
+def test_idf():
+    '''
+    Tests if SearchEngine properly finds the idf value
+    for each word in the given query
+    '''
