@@ -1,7 +1,8 @@
 """
-Student Name
+Yeehahn Wang-Liu
 Intermediate Data Programming
 """
+import cse163_utils
 
 
 class Document:
@@ -14,23 +15,46 @@ class Document:
         file, throws an exception
         '''
         self._path = path
+        self._words = self.get_words()
+        self._words_count = self._find_words_count(self._words)
+
+    def _find_words_count(self, words):
+        words_count = {}
+        for word in words:
+            if word in words_count:
+                words_count[word] = words_count[word] + 1
+            else:
+                words_count[word] = 1
+
+        return words_count
+
+    def find_words(self):
+        '''
+        Stores each normalized word in the file given by the path
+        as an element in a list.
+        Returns this list
+        '''
+        words = []
+        with open(self._path) as file:
+            lines = file.readlines()
+            for line in lines:
+                for word in line:
+                    words.append(cse163_utils.normalize_token(word))
+
+        return words
 
     def get_words(self):
-        '''
-        method comment goes here
-        '''
-        return []
+        return self._words
+
+    def get_words_count(self):
+        return self._words_count
 
     def term_frequency(self, term):
         '''
-        method comment goes here
+        Takes a term and returns the term frequency
+        Term frequency is the number of times a term occurrs in a document
+        divided by the number of words in the document
         '''
+        return self._words_count[term] / len(self._words)
 
-        # TODO: Replace with implementation
-        if not hasattr(Document, '_test_index'):
-            Document._test_index = 0  
-            Document._test_results = [0.00871459, 0]
-        result = Document._test_results[Document._test_index]
-        Document._test_index += 1
-        return result
 
