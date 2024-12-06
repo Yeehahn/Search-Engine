@@ -14,9 +14,10 @@ class Document:
         Initializes a new Document object. If the given path is not a valid
         file, throws an exception
         '''
-        self._path = path
-        self._words = self.get_words()
+        self._path = cse163_utils.normalize_paths(path)
+        self._words = self._find_words()
         self._words_count = self._find_words_count(self._words)
+        self._term_frequency = self._process_term_frequency(self._words_count)
 
     def _find_words_count(self, words):
         words_count = {}
@@ -28,7 +29,7 @@ class Document:
 
         return words_count
 
-    def find_words(self):
+    def _find_words(self):
         '''
         Stores each normalized word in the file given by the path
         as an element in a list.
@@ -43,6 +44,14 @@ class Document:
 
         return words
 
+    def _process_term_frequency(self, words_count):
+        tot_words = len(self._words)
+        tf = {}
+        for word, count in words_count.items():
+            tf[word] = count / tot_words
+        
+        return tf
+
     def get_words(self):
         return self._words
 
@@ -55,6 +64,6 @@ class Document:
         Term frequency is the number of times a term occurrs in a document
         divided by the number of words in the document
         '''
-        return self._words_count[term] / len(self._words)
+        return self._term_frequency[term]
 
 

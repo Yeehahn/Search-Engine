@@ -15,9 +15,6 @@ from document import Document
 # This file is left blank for you to fill in with your tests!
 
 
-
-
-
 def test_search():
     '''
     This method is an Example Test showing how to normalize paths.

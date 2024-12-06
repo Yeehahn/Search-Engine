@@ -19,9 +19,10 @@ class SearchEngine:
         method comment goes here
         '''
         self._documents = self._create_documents(path)
-        self._inverted = {}
-        self._idf = {}
-        self._query = set()
+        self._doc_count = len(self._documents)
+        # Watch out if query has words that never appear in documents
+        self._inverted = self._process_inverted()
+        self._idf = self._find_idf()
 
     def _create_documents(self, path):
         file_paths = [os.path.join(path, f) for f in os.listdir(path)]
@@ -38,34 +39,41 @@ class SearchEngine:
 
         return math.log(self._doc_count / len(self._inverted[term]))
 
-    def search(self, query):
-        '''
-        method comment goes here
-        '''
-        self._query = self._process_query(query)
-        self._inverted = self._process_inverted()
-        self._idf = _find_idf()
-
     def _find_idf(self):
-        for word in self._query:
-            self._idf[word] = self._calculate_idf(word)
+        '''
+        Finds the idf of each word in all of the documents
+        Stores the term and a key and idf as a value in a dictionary
+        Returns this dictionary
+        '''
+        idf = {}
+        for word, count in self._inverted.items():
+            idf[word] = self._calculate_idf(word)
+        return idf
 
-    def _process_inverted(self):
-        for word in self._query:
-            self._inverted[word] = 0
-
+    def _find_inverted(self):
+        inverted = {}
         for document in self._documents:
-            for word in self._query:
-                if word in document.get_words():
-                    self._inverted[word] = self._inverted[word] + 1
-        return self._inverted
+            for words in document.get_words_count().keys():
+                for word in words:
+                    if word in inverted:
+                        inverted[word] = inverted[word] + 1
+                    else:
+                        inverted[word] = 1
+        
+        return inverted
 
     def _process_query(self, query):
-        que = query.split(' ')
-        for word in que:
-            self._query.add(cse163_utils.normalize_token(word))
-        
-        return self._query
+        '''
+        Takes a query as a string
+        Normalizes all tokens in the query
+        Returns a list of all tokens in the query
+        '''
+        que_list = query.split(' ')
+        ret = []
+        for word in que_list:
+            ret.append(cse163_utils.normalize_token(word))
+
+        return ret
 
         return [
             ['test_corpus/document2.txt', 'test_corpus/document3.txt'],
