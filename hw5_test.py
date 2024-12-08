@@ -11,7 +11,7 @@ from cse163_utils import normalize_paths
 # from document import Document
 from search_engine import SearchEngine
 from document import Document
-
+import math
 # This file is left blank for you to fill in with your tests!
 
 
@@ -39,15 +39,37 @@ def test_create_documents():
     assert_equals(expected, actual)
 
 
+def test_document_frequnecy():
+    '''
+    Tests if SearchEnginge properly finds the count
+    '''
+    engine = SearchEngine('test_corpus')
+    expected_I = 3
+    expected_love = 1
+    actual_I = engine._document_frequency['i']
+    actual_love = engine._document_frequency['love']
+    assert_equals(expected_I, actual_I)
+    assert_equals(expected_love, actual_love)
+
+
 def test_idf():
     '''
     Tests if SearchEngine properly finds the idf value
     for each word in the given query
     '''
+    engine = SearchEngine('test_corpus')
+    expected_I = math.log(4 / 3)
+    expected_love = math.log(4 / 1)
+    actual_I = engine._idf['i']
+    actual_love = engine._idf['love']
+    assert_equals(expected_I, actual_I)
+    assert_equals(expected_love, actual_love)
 
 
 def main():
     test_create_documents()
+    test_document_frequnecy()
+    test_idf()
 
 
 if __name__ == '__main__':

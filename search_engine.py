@@ -21,10 +21,14 @@ class SearchEngine:
         self._documents = self._create_documents(path)
         self._doc_count = len(self._documents)
         # Watch out if query has words that never appear in documents
-        self._inverted = self._process_inverted()
+        self._document_frequency = self._find_document_frequency(self._documents)
         self._idf = self._find_idf()
 
     def _create_documents(self, path):
+        '''
+        Given a path
+        Creates a list of documents for each txt file in given path
+        '''
         file_paths = [os.path.join(path, f) for f in os.listdir(path)]
         documents = []
         for file_path in file_paths:
@@ -36,8 +40,7 @@ class SearchEngine:
         '''
         Calculates the idf for a given string
         '''
-
-        return math.log(self._doc_count / len(self._inverted[term]))
+        return math.log(self._doc_count / self._document_frequency[term])
 
     def _find_idf(self):
         '''
@@ -46,21 +49,24 @@ class SearchEngine:
         Returns this dictionary
         '''
         idf = {}
-        for word, count in self._inverted.items():
+        for word in self._document_frequency.keys():
             idf[word] = self._calculate_idf(word)
         return idf
 
-    def _find_inverted(self):
-        inverted = {}
-        for document in self._documents:
-            for words in document.get_words_count().keys():
-                for word in words:
-                    if word in inverted:
-                        inverted[word] = inverted[word] + 1
-                    else:
-                        inverted[word] = 1
-        
-        return inverted
+    def _find_document_frequency(self, documents):
+        '''
+        Takes a list of documents
+        Counts the number of documents that contain each term
+        Returns a dictionary where keys are terms and values are the count
+        '''
+        document_frequency = {}
+        for document in documents:
+            for word in document.get_words_count().keys():
+                if word in document_frequency:
+                    document_frequency[word] = document_frequency[word] + 1
+                else:
+                    document_frequency[word] = 1
+        return document_frequency
 
     def _process_query(self, query):
         '''
@@ -75,8 +81,8 @@ class SearchEngine:
 
         return ret
 
-        return [
-            ['test_corpus/document2.txt', 'test_corpus/document3.txt'],
-            ['test_corpus/document2.txt', 'test_corpus/document3.txt'],
-            ['test_corpus/document2.txt', 'test_corpus/nsa.txt'],
-            ['test_corpus/document2.txt', 'test_corpus/nsa.txt']][SearchEngine.test_count]
+    def _
+    
+    def search(self, query):
+        query = self._process_query(query)
+        

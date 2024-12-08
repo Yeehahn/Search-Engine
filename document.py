@@ -20,6 +20,11 @@ class Document:
         self._term_frequency = self._process_term_frequency(self._words_count)
 
     def _find_words_count(self, words):
+        '''
+        Takes a list of words
+        Counts how many times each word occurrs in the list
+        Returns the counts of words as a dictionary
+        '''
         words_count = {}
         for word in words:
             if word in words_count:
@@ -37,19 +42,23 @@ class Document:
         '''
         words = []
         with open(self._path) as file:
-            lines = file.readlines()
-            for line in lines:
-                for word in line:
-                    words.append(cse163_utils.normalize_token(word))
+            words_in_file = file.read().split(' ')
+            for word in words_in_file:
+                words.append(cse163_utils.normalize_token(word))
 
         return words
 
     def _process_term_frequency(self, words_count):
+        '''
+        Takes the dictionary of the counts of all words in the document
+        Calculates the term frequency of each term in the document
+        Returns a dictionary of the value of the term frequnecy for each term
+        '''
         tot_words = len(self._words)
         tf = {}
         for word, count in words_count.items():
             tf[word] = count / tot_words
-        
+
         return tf
 
     def get_words(self):
@@ -64,6 +73,10 @@ class Document:
         Term frequency is the number of times a term occurrs in a document
         divided by the number of words in the document
         '''
-        return self._term_frequency[term]
+        term = cse163_utils.normalize_token(term)
+        if term in self._term_frequency.keys():
+            return self._term_frequency[term]
+        else:
+            return 0
 
 
