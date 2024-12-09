@@ -67,6 +67,9 @@ class Document:
     def get_words_count(self):
         return self._words_count
 
+    def get_path(self):
+        return self._path
+
     def term_frequency(self, term):
         '''
         Takes a term and returns the term frequency

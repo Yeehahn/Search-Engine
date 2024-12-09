@@ -22,7 +22,7 @@ class SearchEngine:
         self._doc_count = len(self._documents)
         # Watch out if query has words that never appear in documents
         self._document_frequency = self._find_document_frequency(self._documents)
-        self._idf = self._find_idf()
+        self._idf = self._find_idf(self._document_frequency)
 
     def _create_documents(self, path):
         '''
@@ -42,14 +42,14 @@ class SearchEngine:
         '''
         return math.log(self._doc_count / self._document_frequency[term])
 
-    def _find_idf(self):
+    def _find_idf(self, document_frequency):
         '''
         Finds the idf of each word in all of the documents
         Stores the term and a key and idf as a value in a dictionary
         Returns this dictionary
         '''
         idf = {}
-        for word in self._document_frequency.keys():
+        for word in document_frequency.keys():
             idf[word] = self._calculate_idf(word)
         return idf
 
@@ -68,6 +68,12 @@ class SearchEngine:
                     document_frequency[word] = 1
         return document_frequency
 
+    def _inverse_document_frequency(self, term):
+        if term in self._idf.keys():
+            return self._idf[term]
+        else:
+            return 0
+
     def _process_query(self, query):
         '''
         Takes a query as a string
@@ -81,8 +87,22 @@ class SearchEngine:
 
         return ret
 
-    def _
-    
+    def _assign_td_idf(self, query):
+        documents_td_idf = {}
+        for document in self._documents:
+            td_idf = 0
+            for word in query:
+                td_idf += document.term_frequency(word) * self._inverse_document_frequency(word)
+
+            if td_idf > 0:
+                documents_td_idf[document] = td_idf
+        return documents_td_idf
+
     def search(self, query):
         query = self._process_query(query)
-        
+        documents_td_idf = self._assign_td_idf(query)
+        sorted_docs = sorted(documents_td_idf.items(), key=lambda x: x[1], reverse=True)
+        for i in range(0, min(10, len(sorted_docs))):
+            sorted_docs[i] = sorted_docs[i][0].get_path()
+
+        return sorted_docs
