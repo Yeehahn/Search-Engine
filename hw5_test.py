@@ -35,7 +35,7 @@ def test_create_documents():
                 Document('test_corpus/document2.txt')._words,
                 Document('test_corpus/document3.txt')._words,
                 Document('test_corpus/nsa.txt')._words]
-    actual = [document._words for document in engine._documents]
+    actual = [document._words for document in engine._documents.values()]
     assert_equals(expected, actual)
 
 
