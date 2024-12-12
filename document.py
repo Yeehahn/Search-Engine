@@ -62,12 +62,21 @@ class Document:
         return tf
 
     def get_words(self):
+        '''
+        Returns the words in document
+        '''
         return self._words
 
     def get_words_count(self):
+        '''
+        Returns the dictionary of words and count of words
+        '''
         return self._words_count
 
     def get_path(self):
+        '''
+        Returns the path to the document
+        '''
         return self._path
 
     def term_frequency(self, term):
