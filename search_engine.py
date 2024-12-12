@@ -113,10 +113,11 @@ class SearchEngine:
         '''
         relevant_docs = []
         for word in query:
-            documents_contain_word = self._documents[word]
-            for document in documents_contain_word:
-                if document not in relevant_docs:
-                    relevant_docs.append(document)
+            if word in self._documents.keys():
+                documents_contain_word = self._documents[word]
+                for document in documents_contain_word:
+                    if document not in relevant_docs:
+                        relevant_docs.append(document)
         return relevant_docs
 
     def search(self, query):

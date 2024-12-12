@@ -79,13 +79,109 @@ def test_search():
     assert_equals(expected, actual)
 
 
-def main():
+def test_search_bad_search():
+    engine = SearchEngine('test_corpus')  
+    actual = engine.search('rahasdfa;lkh')
+    expected = []
+    assert_equals(expected, actual)
+
+
+def test_multi_word_bad_search():
+    engine = SearchEngine('test_corpus')  
+    actual = engine.search('rahasdfa;lkh love gaasdf;alhasdfhb puppies')
+    expected = ['test_corpus/document1.txt', 'test_corpus/document3.txt']
+    assert_equals(expected, actual)
+
+
+def test_empty_search():
+    engine = SearchEngine('test_corpus')  
+    actual = engine.search('')
+    expected = []
+    assert_equals(expected, actual)
+
+
+def test_non_normal_search():
+    engine = SearchEngine('test_corpus')  
+    actual = engine.search('sYsTems     puPpIes....')
+    expected = ['test_corpus/document3.txt', 'test_corpus/document2.txt', 'test_corpus/nsa.txt']
+    assert_equals(expected, actual)
+
+
+def test_find_words():
+    doc = Document('test_corpus/document1.txt')
+    actual = doc._find_words()
+    expected = ['i', 'love', 'bruno']
+    assert_equals(expected, actual)
+
+
+def test_find_words_empty():
+    doc = Document('test_corpus_2/empty.txt')
+    actual = doc._find_words()
+    expected = ['']
+    assert_equals(expected, actual)
+
+
+def test_term_frequency():
+    doc = Document('test_corpus/document1.txt')
+    actual = doc.term_frequency('i')
+    expected = 1 / 3
+    assert_equals(expected, actual)
+
+
+def test_term_frequency_bad_search():
+    doc = Document('test_corpus/document1.txt')
+    actual = doc.term_frequency('gabadasdf')
+    expected = 0
+    assert_equals(expected, actual)
+
+
+def test_term_frequency_empty():
+    doc = Document('test_corpus/document1.txt')
+    actual = doc.term_frequency('')
+    expected = 0
+    assert_equals(expected, actual)
+
+
+def test_find_words_count():
+    doc = Document('test_corpus/document3.txt')
+    actual = doc._find_words_count(doc._words)
+    expected = {'i': 2, 'like': 2, 'puppies': 1}
+    assert_equals(expected, actual)
+
+
+def test_find_words_count_2():
+    doc = Document('test_corpus/document1.txt')
+    actual = doc._find_words_count(doc._words)
+    expected = {'i': 1, 'love': 1, 'bruno': 1}
+    assert_equals(expected, actual)
+
+
+def test_document():
+    test_find_words()
+    test_find_words_empty()
+    test_term_frequency()
+    test_term_frequency_bad_search()
+    test_term_frequency_empty()
+    test_find_words_count()
+    test_find_words_count_2()
+
+
+def test_search_engine():
     test_create_documents()
     test_document_frequnecy()
     test_idf()
     test_find_relevant_documents()
     test_assign_tf_idf()
     test_search()
+    test_search_bad_search()
+    test_empty_search()
+    test_multi_word_bad_search()
+    test_non_normal_search()
+
+
+def main():
+    test_search_engine()
+    test_document()
 
 
 if __name__ == '__main__':

@@ -81,9 +81,10 @@ class Document:
 
     def term_frequency(self, term):
         '''
-        Takes a term and returns the term frequency
+        Takes a term that was normalized and returns the term frequency
         Term frequency is the number of times a term occurrs in a document
         divided by the number of words in the document
+        If the term never appears in the document returns 0
         '''
         term = cse163_utils.normalize_token(term)
         if term in self._term_frequency.keys():
