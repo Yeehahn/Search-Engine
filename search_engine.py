@@ -52,7 +52,10 @@ class SearchEngine:
         '''
         Calculates the idf for a given string
         '''
-        return math.log(self._doc_count / len(self._documents[term]))
+        if term in self._documents:
+            return math.log(self._doc_count / len(self._documents[term]))
+        else:
+            return 0
 
     def _find_idf(self, documents):
         '''
