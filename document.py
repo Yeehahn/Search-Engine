@@ -32,7 +32,7 @@ class Document:
         words_count = {}
         for word in words:
             if word in words_count:
-                words_count[word] = words_count[word] + 1
+                words_count[word] += 1
             else:
                 words_count[word] = 1
 
@@ -46,9 +46,11 @@ class Document:
         '''
         words = []
         with open(self._path) as file:
-            words_in_file = file.read().split(' ')
-            for word in words_in_file:
-                words.append(cse163_utils.normalize_token(word))
+            lines = file.readlines()
+            for line in lines:
+                words_in_file = line.split()
+                for word in words_in_file:
+                    words.append(cse163_utils.normalize_token(word))
 
         return words
 

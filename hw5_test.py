@@ -149,7 +149,7 @@ def test_find_words_empty():
     '''
     doc = Document('test_corpus_2/empty.txt')
     actual = doc._find_words()
-    expected = ['']
+    expected = []
     assert_equals(expected, actual)
 
 

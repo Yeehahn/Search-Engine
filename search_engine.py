@@ -129,7 +129,6 @@ class SearchEngine:
         Sorted by relevancy
         '''
         query = self._process_query(query)
-        # What happens if empty?
         relevant_docs = self._find_relevant_documents(query)
         documents_tf_idf = self._assign_tf_idf(query, relevant_docs)
         sorted_docs = sorted(documents_tf_idf.items(), key=lambda x: x[1], reverse=True)
