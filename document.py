@@ -7,7 +7,11 @@ import cse163_utils
 
 class Document:
     '''
-    class comment goes here
+    Document stores information of a text file
+    Stores words in a list
+    Stores the number of times a word ocurrs in a document as a dictionary
+    Stores the term_frequency value of each word
+    Users can find term frequencies
     '''
     def __init__(self, path):
         '''

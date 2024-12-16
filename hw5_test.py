@@ -15,6 +15,9 @@ import math
 
 
 def test_create_documents():
+    '''
+    Tests the create documents method
+    '''
     engine = SearchEngine('test_corpus')
     expected = {' '.join(Document('test_corpus/document1.txt')._words), 
                 ' '.join(Document('test_corpus/document2.txt')._words),
@@ -26,7 +29,7 @@ def test_create_documents():
 
 def test_document_frequnecy():
     '''
-    Tests if SearchEnginge properly finds the count
+    Tests if SearchEngine properly finds the count
     '''
     engine = SearchEngine('test_corpus')
     expected_I = 3
@@ -52,6 +55,10 @@ def test_idf():
 
 
 def test_find_relevant_documents():
+    '''
+    Tests if the search engine can properly find relevant documents
+    given a query
+    '''
     engine = SearchEngine('test_corpus')
     expected = sorted([Document('test_corpus/document2.txt')._words,
                        Document('test_corpus/nsa.txt')._words,
@@ -62,6 +69,10 @@ def test_find_relevant_documents():
 
 
 def test_assign_tf_idf():
+    '''
+    Tests if SearchEngine can properly assign tf-idf values for documents
+    given a query
+    '''
     engine = SearchEngine('test_corpus')
     query = ['systems', 'puppies']
     relevant_documents = engine._find_relevant_documents(query)
@@ -73,6 +84,9 @@ def test_assign_tf_idf():
 
 
 def test_search():
+    '''
+    Tests basic multi-word search
+    '''
     engine = SearchEngine('test_corpus')  
     actual = engine.search('systems puppies')
     expected = ['test_corpus/document3.txt', 'test_corpus/document2.txt', 'test_corpus/nsa.txt']
@@ -80,6 +94,9 @@ def test_search():
 
 
 def test_search_bad_search():
+    '''
+    Tests edge-case where search has no valid terms
+    '''
     engine = SearchEngine('test_corpus')  
     actual = engine.search('rahasdfa;lkh')
     expected = []
@@ -87,6 +104,9 @@ def test_search_bad_search():
 
 
 def test_multi_word_bad_search():
+    '''
+    Tests edge-case where bad terms are in an actual search
+    '''
     engine = SearchEngine('test_corpus')  
     actual = engine.search('rahasdfa;lkh love gaasdf;alhasdfhb puppies')
     expected = ['test_corpus/document1.txt', 'test_corpus/document3.txt']
@@ -94,6 +114,9 @@ def test_multi_word_bad_search():
 
 
 def test_empty_search():
+    '''
+    Tests empty search
+    '''
     engine = SearchEngine('test_corpus')  
     actual = engine.search('')
     expected = []
@@ -101,6 +124,9 @@ def test_empty_search():
 
 
 def test_non_normal_search():
+    '''
+    Tests search where terms are don't follow the normalized conventions
+    '''
     engine = SearchEngine('test_corpus')  
     actual = engine.search('sYsTems     puPpIes....')
     expected = ['test_corpus/document3.txt', 'test_corpus/document2.txt', 'test_corpus/nsa.txt']
@@ -108,6 +134,9 @@ def test_non_normal_search():
 
 
 def test_find_words():
+    '''
+    Tests Document class's find_words method
+    '''
     doc = Document('test_corpus/document1.txt')
     actual = doc._find_words()
     expected = ['i', 'love', 'bruno']
@@ -115,6 +144,9 @@ def test_find_words():
 
 
 def test_find_words_empty():
+    '''
+    Tests edge-case where document is empty
+    '''
     doc = Document('test_corpus_2/empty.txt')
     actual = doc._find_words()
     expected = ['']
@@ -122,6 +154,9 @@ def test_find_words_empty():
 
 
 def test_term_frequency():
+    '''
+    Tests Document term frequency method
+    '''
     doc = Document('test_corpus/document1.txt')
     actual = doc.term_frequency('i')
     expected = 1 / 3
@@ -129,6 +164,9 @@ def test_term_frequency():
 
 
 def test_term_frequency_bad_search():
+    '''
+    Tests term frequency but given term is not a term in document
+    '''
     doc = Document('test_corpus/document1.txt')
     actual = doc.term_frequency('gabadasdf')
     expected = 0
@@ -136,6 +174,9 @@ def test_term_frequency_bad_search():
 
 
 def test_term_frequency_empty():
+    '''
+    Tests term frequency given an empty search
+    '''
     doc = Document('test_corpus/document1.txt')
     actual = doc.term_frequency('')
     expected = 0
@@ -143,6 +184,9 @@ def test_term_frequency_empty():
 
 
 def test_find_words_count():
+    '''
+    Tests find_words_count method
+    '''
     doc = Document('test_corpus/document3.txt')
     actual = doc._find_words_count(doc._words)
     expected = {'i': 2, 'like': 2, 'puppies': 1}
@@ -150,6 +194,9 @@ def test_find_words_count():
 
 
 def test_find_words_count_2():
+    '''
+    Tests find_words_count method
+    '''
     doc = Document('test_corpus/document1.txt')
     actual = doc._find_words_count(doc._words)
     expected = {'i': 1, 'love': 1, 'bruno': 1}
@@ -157,6 +204,9 @@ def test_find_words_count_2():
 
 
 def test_document():
+    '''
+    Tests methods in the Document class
+    '''
     test_find_words()
     test_find_words_empty()
     test_term_frequency()
@@ -167,6 +217,9 @@ def test_document():
 
 
 def test_search_engine():
+    '''
+    Tests methods in the SearchEngine class
+    '''
     test_create_documents()
     test_document_frequnecy()
     test_idf()
