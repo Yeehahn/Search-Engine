@@ -46,11 +46,9 @@ class Document:
         '''
         words = []
         with open(self._path) as file:
-            lines = file.readlines()
-            for line in lines:
-                words_in_file = line.split()
-                for word in words_in_file:
-                    words.append(cse163_utils.normalize_token(word))
+            words_in_file = file.read().split()
+            for word in words_in_file:
+                words.append(cse163_utils.normalize_token(word))
 
         return words
 
