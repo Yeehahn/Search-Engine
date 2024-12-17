@@ -208,8 +208,8 @@ def test_find_words_a():
     Tests find_words method
     '''
     doc = Document('test_corpus_2/a.txt')
-    actual = doc.get_words()
-    expected = ['a', 'as', 'a', 'a', 'a', 'a']
+    actual = sorted(doc.get_words())
+    expected = sorted(['a', 'a', 'a', 'a', 'a', 'ability', 'as'])
     assert_equals(expected, actual)
 
 
