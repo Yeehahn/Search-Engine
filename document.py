@@ -3,7 +3,6 @@ Yeehahn Wang-Liu
 Intermediate Data Programming
 """
 import cse163_utils
-import re
 
 
 class Document:
@@ -47,7 +46,7 @@ class Document:
         '''
         words = []
         with open(self._path) as file:
-            words_in_file = re.findall(r'\b\w+\b', file.read())
+            words_in_file = file.read().split()
             for word in words_in_file:
                 words.append(cse163_utils.normalize_token(word))
 
