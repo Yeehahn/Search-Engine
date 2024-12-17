@@ -3,6 +3,7 @@ Yeehahn Wang-Liu
 Intermediate Data Programming
 """
 import cse163_utils
+import re
 
 
 class Document:
@@ -46,7 +47,7 @@ class Document:
         '''
         words = []
         with open(self._path) as file:
-            words_in_file = file.read().split()
+            words_in_file = re.findall(r'\b\w+\b', file.read())
             for word in words_in_file:
                 words.append(cse163_utils.normalize_token(word))
 
@@ -56,7 +57,7 @@ class Document:
         '''
         Takes the dictionary of the counts of all words in the document
         Calculates the term frequency of each term in the document
-        Returns a dictionary of the value of the term frequnecy for each term
+        Returns a dictionary of the value of the term frequency for each term
         '''
         tot_words = len(self._words)
         tf = {}
