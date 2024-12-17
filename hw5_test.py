@@ -209,7 +209,7 @@ def test_find_words_a():
     '''
     doc = Document('test_corpus_2/a.txt')
     actual = sorted(doc.get_words())
-    expected = sorted(['a', 'a', 'a', 'a', 'a', 'ability', 'as'])
+    expected = sorted(['a', 'ability', 'as'])
     assert_equals(expected, actual)
 
 

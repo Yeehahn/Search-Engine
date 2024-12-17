@@ -74,7 +74,7 @@ class Document:
         '''
         Returns the words in document
         '''
-        return self._words
+        return list(set(self._words))
 
     def get_words_count(self):
         '''
