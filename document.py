@@ -27,7 +27,7 @@ class Document:
         '''
         Takes a list of words
         Counts how many times each word occurrs in the list
-        Returns the counts of words as a dictionary
+        Returns the counts of words as a dictionary where word is key and count is value
         '''
         words_count = {}
         for word in words:
