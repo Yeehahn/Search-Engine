@@ -3,6 +3,7 @@ Yeehahn Wang-Liu
 Intermediate Data Programming
 """
 import cse163_utils
+import os
 
 
 class Document:
@@ -19,6 +20,10 @@ class Document:
         file, throws an exception
         '''
         self._path = cse163_utils.normalize_paths(path)
+
+        if not os.path.isfile(self._path):
+            raise FileNotFoundError("Non-valid path")
+
         self._words = self._find_words()
         self._words_count = self._find_words_count(self._words)
         self._term_frequency = self._process_term_frequency(self._words_count)

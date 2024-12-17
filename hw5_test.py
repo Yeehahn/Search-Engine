@@ -203,6 +203,16 @@ def test_find_words_count_2():
     assert_equals(expected, actual)
 
 
+def test_find_words_a():
+    '''
+    Tests find_words method
+    '''
+    doc = Document('test_corpus_2/a.txt')
+    actual = doc.get_words()
+    expected = ['a', 'as', 'a', 'a', 'a', 'a']
+    assert_equals(expected, actual)
+
+
 def test_document():
     '''
     Tests methods in the Document class
@@ -214,6 +224,7 @@ def test_document():
     test_term_frequency_empty()
     test_find_words_count()
     test_find_words_count_2()
+    test_find_words_a()
 
 
 def test_search_engine():
