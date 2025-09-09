@@ -3,6 +3,7 @@
 
 ## Overview
 **Origin:** This project was completed as an equivalent course to CSE 163 at UW.
+
 **Learning objective:** Implement specialized data types with Python classes for tf-idf information retrieval.  
 
 ## Files and Tests
