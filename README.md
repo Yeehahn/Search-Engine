@@ -1,7 +1,8 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Z7RbNqj6)
+
 # HW5 - Search Engine
 
 ## Overview
+**Origin:** This project was completed as an equivalent course to CSE 163 at UW.
 **Learning objective:** Implement specialized data types with Python classes for tf-idf information retrieval.  
 
 ## Files and Tests
@@ -166,106 +167,3 @@ Furthermore, do not add files to these directories:
 * small_text
 
 Do not change `cse163_utils.py`. Do NOT add any method to this file either!
-
-### Normalize Paths
-Due to how `os.join.path` works across operating systems, search results
-need to be _normalized_. Use the following pattern in your tests to assure that your expected paths equal your actual paths no matter where your tests run.  
-
-If you do not use this pattern, your tests might fail on my machine.
-
-```python
-from cse163_utils import normalize_paths
-
-def test_search():
-    '''
-    This method is an Example Test showing how to normalize paths.
-    Do not include this test as one of your own!
-    '''
-    engine = SearchEngine('directory')
-    expected = ['directory/doc1.txt', 'directory/doc2.txt']
-    actual = engine.search('my query')
-    # Please normalize the paths!!
-    expected = normalize_paths(expected)
-    actual = normalize_paths(actual)
-    assert_equals(expected, actual)
-``` 
-
-## Important Tips
-### Testing Output
-Use the run & debug tab (Debug UnitTest) to run the suite of tests 'manually' with the debugger so that you can debug and get more details on any failures. Note that if you fail one of these Unit Tests,
-then **your** Unit Tests are not thorough enough. Update them!! You may find this slow at running larger documents though so just run your main python file manually in that case.
-
-### Performance
-Performance is an important part of this project. You should implement your project in ways that limits the processing. Don't **RE**process anything.
-
-You should cache values/data in the Document and SearchEngine classes to avoid expensive recalculations. Of course, a `search` will still require you to gather TF-IDF values across all the documents that contain any term in the Search Term.  
-
-When you test to see if something contains something, be sure this is a fast operation. For example, the following is slow:
-```python
-# our example needs a long list
-my_list = [ n**2 for n in range(200000)]
-x = -1
-if x in my_list:
-    print('Well that "in" operation was slow!')
-```
-You should manually try out your project with the `small_text`. Do this by running `main.py`. If your implementation fails to process this directory in a reasonable amount of time, you have a flaw. You will not pass the project if you cannot successfully do a search on the `small_text` directory.
-
-### Normalize
-The Unit Tests require that you `normalize` your terms in the Document method `term_frequency`. 
-
-### Test Document Thoroughly
-* Consider edge cases. Can you think of any?  
-* Test `term_frequency` on at least two different words and documents where you can easily calculate the values manually.  
-* Search with UnNormalized! terms.
-
-### Sorting Lists for comparison
-When you `assert_equals` on two lists, the assert requires that the
-lists be in the same order. **IF** you don't care about the order of the lists, one way to verify that they are identical is to first sort the lists. Note that sometimes the order is important.  
-```python
-    # This test doesn't care about the order of the items.
-    # This could be true for Document::get_words
-    assert_equals(sorted(list1), sorted(list2))
-```
-
-## HTML Stripping
-In prior years, students were given HTML files and not text files. This section is a discussion about stripping HTML out of the documents which has already been done for you.  
-
-You are provided with two folders with documents. When you run `main.py`, you should start off by crawling the files in `test_corpus` or a folder you created with your own individual set of files. Eventually, _but not at the start_, you will be able to quickly and effectively search `small_text`. Give it a shot before you submit your project!
-
-The `small_text` folder is a subset of wikipedia HTML articles with the HTML stripped away to reveal only the content. By stripping out the HTML tags, there are some pros and cons.  
-
-**Pros of Stripping:**  
-* The developer can proceed without the distraction of how the code interferes with the solution.
-* The indexing solution is not "confused" with needless code (the keywords and the non-English tag names).
-* The size of the content is reduced.
-
-**Cons of Stripping:** 
-* The indexing solution actually works quite nicely on the HTML directly (with a few exceptions).
-* The text has seemingly random spacing and an unusual occurance of the `^` character.
-* Viewing the content is unappealing because all the nice formatting is lost. :-(
-
-If you want to use the HTML version (small_wiki), you may download those files 
-> Note: The curious developer may be interested to know that small_text was created
-> by using BeautifulSoup to strip the HTML files of their HTML. 
-
-# Other Files
-
-The name of the folder `small_text` may be a misnomer because it is 2.5 MB in size. That's arguably large. However, there is a much larger corpus you can choose to use from here that includes 
-
-["Folder for more files"](https://drive.google.com/drive/folders/1UW7XHYjmSAdtfGoomRGrE__vqzFWQX-Y?usp=drive_link).
-
-* small_wiki (html) - 2.5MB
-* Larger Files:
-  * wikipedia (html) - 74MB
-  * wiki_text (text) - 26MB
-
-## Access Note
-The Google shares require that you use your NSD Credentials. 
-
-The best way forward is to run HW5 locally instaed of using up your codespaces budget (if you do, request this using the "Student Request" schoology form).
-
-If your code is written efficiently, it will work if given a little time. If your code is not written efficiently, patience will not suffice. :-)
-
-#   S e a r c h - E n g i n e 
- 
- 
